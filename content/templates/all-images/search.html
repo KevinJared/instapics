@@ -1,0 +1,31 @@
+{%extends 'all-images/base.html'%}
+{% block content %}
+<div class="container">
+
+  <div class="row">
+    {% if image%}
+    <h2>Found {{ image|length }} of searched term {{message}}</h2>
+    {% else %}
+    <h2> Found 0 Images for the search term {{message}}</h2>
+    {% endif %}
+
+  </div>
+
+  <div class="row" style="font-family: 'Montserrat', sans-serif;">
+
+    {% for img in image %}
+    <div class="col-md-6 col-lg-4">
+      <div class="card border-0 transform-on-hover">
+        <a class="lightbox" href="">
+          <img src="{{ img.image.url }}" alt="Card Image" class="img-responsive" width="100%" height="300px">
+        </a>
+        <div class="card-body">
+          <h6><a href="#">{{ img.image_name }}</a></h6>
+          <p class="text-muted card-text">{{ img.image_description }}</p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
