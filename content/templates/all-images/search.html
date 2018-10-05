@@ -4,9 +4,9 @@
 
   <div class="row">
     {% if image%}
-    <h2>Found {{ image|length }} of searched term {{message}}</h2>
+    <h2>Found {{ users|length }} of {{message}}</h2>
     {% else %}
-    <h2> Found 0 Images for the search term {{message}}</h2>
+    <h2> There is no user by this name {{message}}</h2>
     {% endif %}
 
   </div>
