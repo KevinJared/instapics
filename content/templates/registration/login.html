@@ -1,0 +1,66 @@
+{%extends "registration/base.html"%}
+{% load bootstrap3 %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <!-- Empty div -->
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            {% if form.errors %}
+            <p> Password or Username is incorrect </p>
+            {% endif %}
+            <div class="panel panel-default" style="margin-top:30px;">
+                <div id="header" class="panel-heading" style="font-family: 'Poiret One', cursive; font-family: 'Cookie', cursive; font-size: 50px; letter-spacing: 2px; text-align: center;">
+                    <a class="button" href="{% url 'contentToday' %}">Instagram</a>
+                </div>
+                <div class="panel-body">
+                    <form action="/accounts/login/" method="post">
+                        {% csrf_token %}
+                        {% bootstrap_form form%}
+
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary btn-sm" value="Login">
+                        </div>
+
+                        <input type="hidden" name="next" value="{{next}}">
+
+                    </form>
+
+                </div>
+
+            </div>
+
+            <div style="text-align: center; border: 1px solid rgb(189, 184, 184);border-radius: 5px; padding: 15px;">
+                <h5>Don't have an account? <a href="/accounts/register/">Sign up</a></h5>
+            </div>
+
+            <div class="footer"style="margin-top:20px;">
+                <div class="row" style="margin-left:10px; margin-bottom:10px;">
+                    <div class="col-md-6">
+                        <a target="blank" href="https://play.google.com/store/apps/details?id=com.instagram.android&referrer=utm_source%3Dinstagramweb%26utm_campaign%3DloginPage%26ig_mid%3DW5FXiwAEAAF0CWKB5uH4nBf_OsAd%26utm_content%3Dlo%26utm_medium%3Dbadge"><img
+                                src="https://ds-web-assets.s3.amazonaws.com/51a09661-f8e2-47aa-8dca-49419585bcdf/p-680a1562-fe45-410d-a4c9-610b0dbd9536/1528210271-full.png"
+                                alt="" class="img-reponsive" width="90%"> </a>
+                    </div>
+                    <div class="col-md-6">
+
+                        <a target="blank" href="https://itunes.apple.com/app/instagram/id389801252?pt=428156&ct=igweb.loginPage.badge&mt=8&vt=lo"><img
+                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Download_on_the_App_Store_Badge.svg/1280px-Download_on_the_App_Store_Badge.svg.png"
+                                alt="" class="img-reponsive" width="90%"> </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- empty div -->
+        <div class="col-md-4"></div>
+
+    </div>
+    <style>
+        #header a {
+            color: black;
+            text-decoration: none;
+        }
+    </style>
+</div>
+
+{% endblock %}
