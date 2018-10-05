@@ -1,5 +1,8 @@
 from django.db import models
 import datetime as dt
+from django.contrib.auth.models import User
+from tinymce.models import HTMLField
+
 # Create your models here.
 
 class Category(models.Model):
@@ -51,7 +54,7 @@ class Image(models.Model):
     location = models.ForeignKey(Location)
 
     def __str__(self):
-        return self.image_name
+        return self.image_description
     def __unicode__(self):
         return self.category
 
@@ -63,18 +66,34 @@ class Image(models.Model):
     def save_image(self):
         self.save()
 
-    @classmethod
-    def search_by_category(cls,search_term):
-        gallery = cls.objects.filter(category__image_category__icontains=search_term)
-        return gallery
+
+class tags(models.Model):
+    name = models.CharField(max_length =30)
+
+    def __str__(self):
+        return self.name
+
+class Article(models.Model):
+    image = models.ImageField(upload_to='articles/', blank=True)
+    tag = models.ForeignKey(User,on_delete=models.CASCADE)
+    pub_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
 
     @classmethod
-    def filter_location(cls,location):
-        # location = Location.objects.(image_location=location)
-        images = cls.objects.filter(location__image_location__istartswith=location)
-        return images
+    def todays_news(cls):
+        today = dt.date.today()
+        news = cls.objects.filter(pub_date__date = today)
+        return news
+
+
     @classmethod
-    
-    def filter_category(cls,category):
-        images = cls.objects.filter(category__image_category__istartswith=category)
-        return images
+    def days_news(cls,date):
+        news = cls.objects.filter(pub_date__date = date)
+        return news
+
+    @classmethod
+    def search_by_title(cls,search_term):
+        news = cls.objects.filter(title__icontains=search_term)
+        return news
