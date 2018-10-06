@@ -2,7 +2,7 @@ from django.http  import HttpResponse, Http404,HttpResponseRedirect
 from django.shortcuts import render, redirect
 from .forms import NewArticleForm
 import datetime as dt
-from .models import Image, Location, Category
+from .models import Image, Likes, Comments
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -11,6 +11,7 @@ def content_of_day(request):
     all_images = Image.objects.all()
     return render(request, 'all-images/content.html', {"images": all_images})
 
+@login_required(login_url='/accounts/login/')
 def profile(request):
     return render(request, 'all-images/profile.html', {"profile": profile})
 
@@ -25,14 +26,7 @@ def convert_dates(dates):
     day = days[day_number]
     return day
 
-def get_location(request,location):
-    image = Image.filter_location(location)
-    return render(request,'location.html',locals())
-
-def get_category(request,category):
-    image = Image.filter_category(category)
-    return render(request,'category.html',locals())
-
+@login_required(login_url='/accounts/login/')
 def search_results(request):
 
     if 'image' in request.GET and request.GET["image"]:
@@ -46,6 +40,7 @@ def search_results(request):
         message = "You haven't searched for any term"
         return render(request, 'all-images/search.html',{"message":message})
 
+@login_required(login_url='/accounts/login/')
 def content(request,image_id):
     try:
         content = Content.objects.get(id = image_id)
