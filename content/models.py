@@ -1,60 +1,26 @@
 from django.db import models
-import datetime as dt
 from django.contrib.auth.models import User
-from tinymce.models import HTMLField
+from django.db.models.signals import post_save,post_delete
+from django.dispatch import receiver
+import datetime as dt
 
 # Create your models here.
 class Profile(models.Model):
-    profile_photo = models.ImageField(upload_to='images/',default='nothing')
-    bio = models.TextField()
-
-    def save_category(self):
-        self.save()
-
-
-class Likes(models.Model):
-    image_likes = models.CharField(max_length=40)
-
-    def save_category(self):
-        self.save()
-
-class Comments(models.Model):
-    image_comments = models.TextField(max_length=40)
-
-    def save_location(self):
-        self.save()
-
-class Image(models.Model):
-    image = models.ImageField(upload_to='images/',default='nothing')
-    image_name = models.CharField(max_length=30)
-    image_caption = models.TextField()
-    likes = models.CharField(max_length=40)
-    comments = models.TextField()
-    profile = models.ForeignKey(User,on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.image_caption
-
-    def __unicode__(self):
-        return self.category
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=30, blank=True)
+    user_name = models.CharField(max_length=30,blank=True)
+    prof_pic = models.ImageField(upload_to= 'profiles/', blank=True,default="profile/a.jpg")
+    bio = models.TextField(max_length=50, blank=True)
 
 
-    class Meta:
-        ordering = ['image_name']
-        #find out
+class Post(models.Model):
+    image = models.ImageField(upload_to='posts/')
+    caption = models.TextField(max_length=50 , blank=True)
+    post_date = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(User, related_name="posted_by", on_delete=models.CASCADE)
+    liker = models.ForeignKey(User, related_name='liked_by', on_delete=models.CASCADE,null=True)
 
-    def save_image(self):
-        self.save()
-        
-class Article(models.Model):
-    image = models.ImageField(upload_to='images/', blank=True)
-    pub_date = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.title
-
-
-    @classmethod
-    def search_by_image(cls,search_term):
-        news = cls.objects.filter(title__icontains=search_term)
-        return news
+class Comment(models.Model):
+    message = models.TextField(max_length=50)
+    user = models.ForeignKey(User, related_name='commented_by', on_delete=models.CASCADE)
+    image = models.ForeignKey(Post, related_name='comment_for', on_delete=models.CASCADE)

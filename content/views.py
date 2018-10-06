@@ -1,64 +1,77 @@
-from django.http  import HttpResponse, Http404,HttpResponseRedirect
-from django.shortcuts import render, redirect
-from .forms import NewArticleForm
-import datetime as dt
-from .models import Image, Likes, Comments
+from django.shortcuts import render
+from content.models import Post, Profile
+from django.shortcuts import redirect
+from django.contrib.auth.models import User
+from friendship.models import Friend, Follow, Block
+from .forms import NewPostForm, UserForm, ProfileForm
 from django.contrib.auth.decorators import login_required
 
+
 # Create your views here.
-@login_required(login_url='/accounts/login/') 
-def content_of_day(request):
-    all_images = Image.objects.all()
-    return render(request, 'all-images/content.html', {"images": all_images})
+@login_required(login_url='/accounts/login/')
+def index(request):
+    current_user = request.user.id
+    user = request.user
+    posts = Post.objects.all()
+    if Profile.objects.filter(user = request.user).count() == 0:
+        prof = Profile(user=request.user)
+        prof.save()
+    return render(request, 'index.html', locals())
+
 
 @login_required(login_url='/accounts/login/')
-def profile(request):
-    return render(request, 'all-images/profile.html', {"profile": profile})
-
-def convert_dates(dates):
-
-    # Function that gets the weekday number for the date.
-    day_number = dt.date.weekday(dates)
-
-    days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday',"Sunday"]
-
-    # Returning the actual day of the week
-    day = days[day_number]
-    return day
-
-@login_required(login_url='/accounts/login/')
-def search_results(request):
-
-    if 'image' in request.GET and request.GET["image"]:
-        search_term = request.GET.get("image")
-        searched_image = Image.search_by_category(search_term)
-        message = f"{search_term}"
-
-        return render(request, 'all-images/search.html',{"message":message,"image": searched_image})
-
-    else:
-        message = "You haven't searched for any term"
-        return render(request, 'all-images/search.html',{"message":message})
-
-@login_required(login_url='/accounts/login/')
-def content(request,image_id):
-    try:
-        content = Content.objects.get(id = image_id)
-    except DoesNotExist:
-        raise Http404()
-    return render(request,"all-images/article.html", {"content":content})(request, 'all-images/search.html',{"message":message})
-
-@login_required(login_url='/accounts/login/')
-def new_article(request):
+def new_post(request):
     current_user = request.user
     if request.method == 'POST':
-        form = NewArticleForm(request.POST, request.FILES)
-        if form.is_valid():
-            article = form.save(commit=False)
-            article.editor = current_user
-            article.save()
-        return redirect('contentToday')
+        form = NewPostForm(request.POST, request.FILES)
 
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = current_user
+            post.save()
+            return redirect('index')
     else:
-        form = NewArticleForm()
-    return render(request, 'new_article.html', {"form": form})
+        form = NewPostForm()
+    return render(request, 'new_post.html', {"form":form})
+
+@login_required(login_url='/accounts/login/')
+def profile(request,user_id=None):
+    if user_id == None:
+        user_id=request.user.id
+    current_user = User.objects.get(id = user_id)
+    user = current_user
+    images = Post.objects.filter(user=current_user)
+    profile = Profile.objects.all()
+    followers = len(Follow.objects.followers(current_user))
+    following = len(Follow.objects.following(current_user))
+    return render(request, 'profile.html', locals())
+
+@login_required
+def userprofile(request, user_id):
+    users = User.objects.get(id=user_id)
+    profile = Profile.objects.get(user=users)
+    images = Post.objects.filter(user=users)
+    followers = len(Follow.objects.followers(users))
+    following = len(Follow.objects.following(users))
+    posts = len(Image.objects.filter(user=users))
+    people_following = Follow.objects.following(request.user)
+    return render(request, 'profile/userprofile.html', {"user": users, "profile": profile, "images": images,"followers":followers, "following":following, "posts":posts, "people_following":people_following})
+
+@login_required(login_url='/accounts/login/')
+def follow(request, user_id):
+    users = User.objects.get(id=user_id)
+    follow = Follow.objects.add_follower(request.user, users)
+    return render(request, 'profile.html', {"users": users, "follow":follow})
+
+@login_required(login_url='/accounts/login')
+def updateprofile(request):
+	if request.method == 'POST':
+		form = ProfileForm(request.POST,request.FILES, instance=request.user.profile)
+		if form.is_valid():
+			form.save()
+			return redirect('profile')
+
+	else:
+			form = ProfileForm()
+	return render(request, 'updateprofile.html',{"form":form })
+

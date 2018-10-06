@@ -1,10 +1,18 @@
-from .models import Article
 from django import forms
+from .models import *
 
-class NewArticleForm(forms.ModelForm):
+class NewPostForm(forms.ModelForm):
+    class Meta :
+        model = Post
+        exclude = ['user', 'post_date','liker']
+
+class UserForm(forms.ModelForm):
     class Meta:
-        model = Article
-        exclude = ['editor', 'pub_date']
-        widgets = {
-            'tags': forms.CheckboxSelectMultiple(),
-        }
+        model = Profile
+        fields = ('name','user_name','bio')
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        exclude = ['user']
+
