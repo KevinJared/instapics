@@ -88,3 +88,9 @@ def comment_on(request, post_id):
             comment.photo = post
             comment.save()
     return render(request, 'new_post.html', locals())
+
+
+@login_required(login_url='/accounts/login/')
+def find(request, name):
+    results = Profile.find_profile(name)
+    return render(request, 'search.html', locals())
