@@ -41,6 +41,6 @@ class Post(models.Model):
         ordering = ["-pk"]
 
 class Comment(models.Model):
-    message = models.TextField(max_length=50)
-    user = models.ForeignKey(User, related_name='commented_by', on_delete=models.CASCADE)
-    image = models.ForeignKey(Post, related_name='comment_for', on_delete=models.CASCADE)
+    text = models.TextField()
+    photo = models.ForeignKey(Post, related_name='comments')
+    user = models.ForeignKey(Profile, related_name='comments')
