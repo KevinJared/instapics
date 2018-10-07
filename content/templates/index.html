@@ -42,6 +42,7 @@
                     <div class="col-md-12">
                         <p><strong>{{ post.user }}</strong> {{ post.caption }} </p>
                     </div>
+
                 </div>
                 <br>
             </div>
@@ -55,18 +56,22 @@
 </div>
 {% for post in posts %}
 <!-- modal content -->
+<!-- modal content -->
 <div class="modal fade" id="myModal{{post.id}}" role="dialog">
-    <div class="modal-dialog modal-lg" style="margin-top:10%;">
-        <div class="modal-content">
-            <div class=" col-md-6 modal-header">
-                <img src="{{post.image.url}}" alt="" class="img-responsive">
-            </div>
+    <div class="modal-dialog modal-lg">
 
-            <div class="modal-body">
-                <h4 class="modal-title">{{ post.caption }}</h4>
-            </div>
-
-            <div class="modal-footer">
+        <div class="modal-content" style="background-color:rgba(255, 255, 255, 0.781);">
+            <div class="modal-header">
+                <div class="row">
+                    <div class="">
+                        <img src="{{post.image.url }}" alt="" width="110%" class="img-responsive">
+                    </div>
+                    <div class="">
+                        <button type="" class="close" data-dismiss="modal">&times;</button>
+                        <p><strong>Name:</strong> {{post.user}}</p>
+                        <h4 class="modal-title">{{post.image_caption}}</h4>
+                    </div>
+                </div>
 
             </div>
         </div>
