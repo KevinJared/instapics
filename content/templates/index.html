@@ -20,7 +20,7 @@
             <div class="col-md-6 card">
                 <div class="card-header" style="height: 70px; padding:5px; border:1px solid rgb(243, 241, 241); background-color: rgb(247, 247, 247);">
                     <div class="col-md-2">
-                        <img class="img-fluid rounded-circle" src="{{ user.profile.prof_pic.url }}" style="width:50px; border-radius:50%">
+                        <img class="img-responsive" src="{{ user.profile.prof_pic.url }}" style="width:50px; border-radius:50%">
                     </div>
                     <div class="col-md-10">
                         <strong>
@@ -30,8 +30,8 @@
                 </div>
                 <div class="card-body" style="margin:0em;">
                     <!-- modal button-->
-                    <img type="button" class="" data-toggle="modal" data-target="#myModal{{post.id}}" class="img-responsive"
-                        src="{{post.image.url }}" alt="" width="550px;">
+                    <img type="button" class="img-responsive" data-toggle="modal" data-target="#myModal{{post.id}}"
+                        class="img-responsive" src="{{post.image.url }}" alt="" width="550px;">
                     <!-- modal -->
                 </div>
 

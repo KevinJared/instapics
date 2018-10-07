@@ -6,13 +6,12 @@ from friendship.models import Friend, Follow, Block
 from .forms import NewPostForm, UserForm, ProfileForm
 from django.contrib.auth.decorators import login_required
 
-
-# Create your views here.
 @login_required(login_url='/accounts/login/')
 def index(request):
     current_user = request.user.id
     user = request.user
     posts = Post.objects.all()
+    ordering=['-date_posted']
     if Profile.objects.filter(user = request.user).count() == 0:
         prof = Profile(user=request.user)
         prof.save()
@@ -22,6 +21,8 @@ def index(request):
 @login_required(login_url='/accounts/login/')
 def new_post(request):
     current_user = request.user
+
+    ordering=['-date_posted']
     if request.method == 'POST':
         form = NewPostForm(request.POST, request.FILES)
 
@@ -75,3 +76,15 @@ def updateprofile(request):
 			form = ProfileForm()
 	return render(request, 'updateprofile.html',{"form":form })
 
+@login_required(login_url='/accounts/login/')
+def comment_on(request, post_id):
+    commentform = CommentForm()
+    post = get_object_or_404(Post, pk=post_id)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user.profile
+            comment.photo = post
+            comment.save()
+    return render(request, 'new_post.html', locals())

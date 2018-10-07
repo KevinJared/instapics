@@ -11,10 +11,9 @@
   {{form.media}}
 
 </head>
+<body style="padding-left:10%; margin-top:30px;">
 
-<body>
-
-  <div class="container-fluid">
+  <div class="well">
     <form action="{%url 'new-post'%}" method="post" enctype="multipart/form-data">
       {%csrf_token%}
 
@@ -24,7 +23,8 @@
 
     {% block scripts %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    {% bootstrap_javascript %} {% endblock %}
+    {% bootstrap_javascript %} 
+    {% endblock %}
 
   </div>
 </body>
