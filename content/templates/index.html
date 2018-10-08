@@ -23,11 +23,11 @@
 
                 <div class="card-header" style="height: 70px; padding:5px; background-color: rgb(247, 247, 247);">
                     <div class="col-md-2">
-                        <img class="img-responsive" src="{{ user.profile.prof_pic.url }}" style="width:50px; border-radius:50%">
+                        <a href="{%url 'profile' user_id%}"><img class="img-responsive" src="{{ user.profile.prof_pic.url }}" style="width:50px; border-radius:50%"></a>
                     </div>
                     <div class="col-md-10">
                         <strong>
-                            <h4>{{post.user}}</h4>
+                            <a href=""><h4>{{post.user}}</h4></a>
                             <h5>{{post.post_date|timesince}}</h5>
                         </strong>
                     </div>
