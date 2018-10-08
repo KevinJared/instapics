@@ -28,7 +28,7 @@ class Profile(models.Model):
     
     @classmethod
     def search_by_user(cls,search_term):
-        content = cls.objects.filter(user__icontains=search_term)
+        content = cls.objects.filter(user__username__icontains=search_term)
         return content
 
 
