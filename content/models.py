@@ -10,7 +10,7 @@ class Profile(models.Model):
     name = models.CharField(max_length=30, blank=True)
     user_name = models.CharField(max_length=30,blank=True)
     prof_pic = models.ImageField(upload_to= 'profiles/', blank=True,default="profile/a.jpg")
-    bio = models.TextField(max_length=500, blank=True)
+    bio = models.TextField(default="Welcome Me!")
 
 
     @receiver(post_save, sender=User)
@@ -36,6 +36,11 @@ class Post(models.Model):
     @property
     def get_comments(self):
         return self.comments.all()
+
+    @classmethod
+    def search_by_user(cls,search_term):
+        content = cls.objects.filter(user__icontains=search_term)
+        return content
 
     class Meta:
         ordering = ["-pk"]

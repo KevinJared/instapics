@@ -94,3 +94,16 @@ def comment_on(request, post_id):
 def find(request, name):
     results = Profile.find_profile(name)
     return render(request, 'search.html', locals())
+
+def search_results(request):
+
+    if 'article' in request.GET and request.GET["article"]:
+        search_term = request.GET.get("article")
+        searched_articles = Article.search_by_title(search_term)
+        message = f"{search_term}"
+
+        return render(request, 'all-news/search.html',{"message":message,"articles": searched_articles})
+
+    else:
+        message = "You haven't searched for any term"
+        return render(request, 'all-news/search.html',{"message":message})
