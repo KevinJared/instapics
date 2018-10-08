@@ -17,48 +17,75 @@
 <div id="#section01" class="container" style="margin-top:30px; margin-left: 18%;">
     <!-- displaying images -->
     <div class="" style="margin-top:20px;">
-        {% for post in posts %}
+
         <div class="row">
-            <div class="col-md-6 card" style="border:1px solid rgb(243, 241, 241); margin-bottom:20px; padding: 0px; padding-right: 0px;">
-
-                <div class="card-header" style="height: 70px; padding:5px; background-color: rgb(247, 247, 247);">
-                    <div class="col-md-2">
-                        <a href="{%url 'profile' user_id%}"><img class="img-responsive" src="{{ user.profile.prof_pic.url }}" style="width:50px; border-radius:50%"></a>
+            <div class="col-md-6 card" style=" margin-right:80px; padding: 0px;">
+                {% for post in posts %}
+                <div style="margin-bottom: 20px; border:1px solid rgb(243, 241, 241);">
+                    <div class="card-header" style="height: 70px; padding:5px; background-color: rgb(247, 247, 247);">
+                        <div class="col-md-2">
+                            <a href="{%url 'profile' user_id%}"><img class="img-responsive" src="{{ user.profile.prof_pic.url }}"
+                                    style="width:50px; border-radius:50%"></a>
+                        </div>
+                        <div class="col-md-10">
+                            <strong>
+                                <a href="">
+                                    <h4>{{post.user}}</h4>
+                                </a>
+                                <h5>{{post.post_date|timesince}}</h5>
+                            </strong>
+                        </div>
                     </div>
-                    <div class="col-md-10">
-                        <strong>
-                            <a href=""><h4>{{post.user}}</h4></a>
-                            <h5>{{post.post_date|timesince}}</h5>
-                        </strong>
+                    <div class="card-body">
+                        <!-- modal button-->
+                        <img type="button" class="img-responsive" data-toggle="modal" data-target="#myModal{{post.id}}"
+                            class="img-responsive" src="{{post.image.url }}" alt="" width="100%;">
+                        <!-- modal -->
                     </div>
-                </div>
-                <div class="card-body" style="margin:0em;">
-                    <!-- modal button-->
-                    <img type="button" class="img-responsive" data-toggle="modal" data-target="#myModal{{post.id}}"
-                        class="img-responsive" src="{{post.image.url }}" alt="" width="100%;">
-                    <!-- modal -->
-                </div>
 
-                <div class="card-footer" style="padding-top:15px;">
-                    <div class="col-md-12" style="margin-bottom: 10px; ">
-                        <span class="instagram-like-icon"></span><span class="instagram-comment-icon"></span><span
-                            class="instagram-bookmark-icon"></span>
+                    <div class="card-footer" style="padding-top:15px; margin-bottom:60px; ">
+                        <div class="col-md-12" style="margin-bottom: 10px; ">
+                            <span class="instagram-like-icon"></span><span class="instagram-comment-icon"></span><span
+                                class="instagram-bookmark-icon"></span>
 
                             <span class="instagram-pers-icon"></span>
-                    </div>
-                    <div class="col-md-12" style=" border-bottom: inherit;">
-                        <p><strong>{{ post.user }}</strong> {{ post.caption }} </p>
+                        </div>
+                        <div class="col-md-12" style=" border-bottom: inherit;">
+                            <p><strong>{{ post.user }}</strong> {{ post.caption }} </p>
 
+                        </div>
                     </div>
                 </div>
+                {% endfor %}
                 <br>
             </div>
-            <div class="col-md-4">
+            <div>
+                <div class="" style="display: inline-block; text-align: center;">
+                    <img class="img-fluid rounded-circle" src="{{ user.profile.prof_pic.url }}" style="border-radius:50%; width:50px;">
+                    <strong>{{ user.username }}</strong>
+                </div>
+              
+                <div>
+                    <div id="ex1" class="col-md-4" style="border-top: 1px solid grey; margin-top:5px; padding-top:20px;">
+                        <div class="row" style="display: inline-block; margin-bottom: 3px;">
+                            {% for post in posts %}
+                            <img class="img-fluid rounded-circle" src="{{ post.image.url  }}" style="border-radius:50%; width:50px;">
+                            <strong>{{post.user}}</strong> <br>
+                            {% endfor %}    
+                        </div>
+                
+                    </div>
+                    
+                    <div class="col-md-4" style="text-align:center; margin-top:4px;">
+                        <h6>About Us .SupportPress. API. Jobs. Privacy Terms. Directory. Profiles. Hashtags. Language.
+                            <br> © 2018 INSTAGRAM</h6>
+                    </div>
+                </div>
 
             </div>
 
         </div>
-        {% endfor %}
+
     </div>
 </div>
 {% for post in posts %}
@@ -135,6 +162,12 @@
     h5 {
         font-family: 'Maven Pro', sans-serif;
         color: crimson;
+    }
+
+    #ex1 {
+        width: 400px;
+        height: 350px;
+        overflow: auto;
     }
 </style>
 {% endfor %}

@@ -25,6 +25,12 @@ class Profile(models.Model):
 
     def comment(self, photo, text):
         Comment(text=text, photo=photo, user=self).save()
+    
+    @classmethod
+    def search_by_user(cls,search_term):
+        content = cls.objects.filter(user__icontains=search_term)
+        return content
+
 
 class Post(models.Model):
     image = models.FileField(upload_to='posts/')
@@ -36,11 +42,6 @@ class Post(models.Model):
     @property
     def get_comments(self):
         return self.comments.all()
-
-    @classmethod
-    def search_by_user(cls,search_term):
-        content = cls.objects.filter(user__icontains=search_term)
-        return content
 
     class Meta:
         ordering = ["-pk"]
