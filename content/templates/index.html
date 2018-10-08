@@ -19,33 +19,35 @@
     <div class="" style="margin-top:20px;">
         {% for post in posts %}
         <div class="row">
-            <div class="col-md-6 card">
+            <div class="col-md-6 card" style="border:1px solid rgb(243, 241, 241); margin-bottom:20px; padding: 0px; padding-right: 0px;">
 
-                <div class="card-header" style="height: 70px; padding:5px; border:1px solid rgb(243, 241, 241); background-color: rgb(247, 247, 247);">
+                <div class="card-header" style="height: 70px; padding:5px; background-color: rgb(247, 247, 247);">
                     <div class="col-md-2">
                         <img class="img-responsive" src="{{ user.profile.prof_pic.url }}" style="width:50px; border-radius:50%">
                     </div>
                     <div class="col-md-10">
                         <strong>
                             <h4>{{post.user}}</h4>
+                            <h5>{{post.post_date|timesince}}</h5>
                         </strong>
                     </div>
                 </div>
                 <div class="card-body" style="margin:0em;">
                     <!-- modal button-->
                     <img type="button" class="img-responsive" data-toggle="modal" data-target="#myModal{{post.id}}"
-                        class="img-responsive" src="{{post.image.url }}" alt="" width="550px;">
+                        class="img-responsive" src="{{post.image.url }}" alt="" width="100%;">
                     <!-- modal -->
                 </div>
 
-                <div class="card-footer" style="padding-top:15px; min-height:100px; border:1px solid rgb(243, 241, 241); background-color: rgb(247, 247, 247);">
-                    <div class="col-md-12" style="margin-bottom: 10px;">
-                        <span class="instagram-like-icon"></span><span class="instagram-comment-icon"></span><span class="instagram-bookmark-icon"></span>
+                <div class="card-footer" style="padding-top:15px;">
+                    <div class="col-md-12" style="margin-bottom: 10px; ">
+                        <span class="instagram-like-icon"></span><span class="instagram-comment-icon"></span><span
+                            class="instagram-bookmark-icon"></span>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-12" style=" border-bottom: inherit;">
                         <p><strong>{{ post.user }}</strong> {{ post.caption }} </p>
-                    </div>
 
+                    </div>
                 </div>
                 <br>
             </div>
@@ -126,6 +128,11 @@
         height: 24px;
         vertical-align: middle;
         width: 24px;
+    }
+
+    h5 {
+        font-family: 'Maven Pro', sans-serif;
+        color: crimson;
     }
 </style>
 {% endfor %}
