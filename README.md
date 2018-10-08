@@ -1,10 +1,14 @@
-# [Instagram Clone]()
+# [Instagram Clone](https://instapics2018.herokuapp.com/)
+
 #### This is my Instagram Clone made for educational purposes.
 #### Oct 5, 2018
 #### By **[Kevin Jared](https://github.com/kevinjared)**
 
 ## Description
 This is a simple photo sharing site where people can upload and share images.
+
+## Live Link
+https://instapics2018.herokuapp.com/
 
 ## Set Up and Installations
 
