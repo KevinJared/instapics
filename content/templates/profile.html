@@ -1,72 +1,68 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container-fluid" style="background-color:rgba(252, 252, 252, 0.753); height: 100vh;">
-  <div class="container" style="margin-top: 30px;">
-    <div class="row" style="border-bottom: 1px solid rgb(214, 214, 214); padding-bottom: 10px;">
-      <div class="col-md-2">
-        <img class="img-fluid rounded-circle" src="{{ user.profile.prof_pic.url }}" style="border-radius:50%; width:150px;">
+
+<div class="container" style="margin-top: 30px;">
+  <div class="row" style="border-bottom: 1px solid rgb(214, 214, 214); padding-bottom: 10px;">
+    <div class="col-md-2">
+      <img class="img-fluid rounded-circle" src="{{ user.profile.prof_pic.url }}" style="border-radius:50%; width:150px;">
+    </div>
+    <div class="col-md-6">
+      <strong>{{ user.username }}</strong>
+      <p>{{profile.bio}}</p>
+    </div>
+    <div class="col-md-4">
+      <div class="col-md-6">
+        {% if user in people_following %}
+        <button class="btn btn-light btn-white btn-sm widen"><strong>Following</strong></button></a>
+        {% elif user == current_user %}
+        <a href="{% url 'updateprofile' %}"><button class="btn">EDIT PROFILE</button></a>
+        {% else %}
+        <a href="{% url 'follow' user_id=user.id %}"><button class="btn btn-primary btn-sm widen"><strong>Follow</strong></button></a>
+        {% endif %}
       </div>
       <div class="col-md-6">
-        <div id="profile" class="col-md-10" style="text-align:left;">
-          <h2><strong>{{ user.username }}</strong></h2>
-          <div class="follow-button">
-            {% if user in people_following %}
-            <button class="btn btn-light btn-white btn-sm widen"><strong>Following</strong></button></a>
-            {% elif user == current_user %}
-            <a href="{% url 'updateprofile' %}"><button class="btn">EDIT PROFILE</button></a>
-            {% else %}
-            <a href="{% url 'follow' user_id=user.id %}"><button class="btn btn-primary btn-sm widen"><strong>Follow</strong></button></a>
-            {% endif %}
-          </div>
+        {% if user.is_authenticated %}
+
+        <div class="dropdown" style="float:left;">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fas fa-cog"
+              style="font-size:18px;"></i>
+            </span>
+          </a>
+
+          <ul class="dropdown-menu" role="menu">
+            <li>
+              <a href="/accounts/password/change">Change Password</a>
+            </li>
+            <li>
+              <a href="{%url 'index'%}">Home</a>
+            </li>
+            <li>
+              <a href="/logout">Logout</a>
+            </li>
+          </ul>
         </div>
-      </div>
-      {% if user.is_authenticated %}
 
-      <div class=" col-md-4 dropdown" style="padding-top:18px;padding-right:18px;">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fas fa-cog"
-            style="font-size:18px;"></i>
-          </span>
-        </a>
+        {% else %}
+        <li>
+          <a class='btn btn-default' href="/accounts/login">Login</a>
+        </li>
 
-        <ul class="dropdown-menu" role="menu">
-          <li>
-            <a href="/accounts/password/change">Change Password</a>
-          </li>
-          <li>
-            <a href="{%url 'index'%}">Home</a>
-          </li>
+        {% endif %}
 
-
-          <li>
-            <a href="/logout">Logout</a>
-          </li>
-        </ul>
-      </div>
-
-      {% else %}
-      <li>
-        <a class='btn btn-default' href="/accounts/login">Login</a>
-      </li>
-
-      {% endif %}
-      <div class="container">
-        <div class="row bio-profile ">
-          <p>{{ profile.bio }}</p>
-        </div>
       </div>
     </div>
   </div>
-  <div class="container" style="margin-top: 5px;">
-    <div class="row">
-      {% for image in images %}
-      <div class="col-md-4 grid-object">
-        <img class="img-fluid top-space" style="width:85%;height:85%;object-fit:cover;" src="{{ image.image.url }}" alt="{{ image.image_caption }}"
-          data-toggle="modal" data-target="#{{image.id}}">
-      </div>
-      {% endfor %}
-    </div>
-  </div>
+</div>
 
+<div class="container" style="margin-top: 15px;">
+  <div class="row">
+    {% for image in images %}
+    <div class="col-md-4 grid-object">
+      <img class="img-fluid top-space" style="width:85%;height:85%;object-fit:cover;" src="{{ image.image.url }}" alt="{{ image.image_caption }}"
+        data-toggle="modal" data-target="#{{image.id}}">
+    </div>
+    {% endfor %}
+  </div>
 </div>
 <style>
   #profile .btn {
@@ -77,6 +73,11 @@
     text-decoration: none;
     display: inline-block;
     font-size: 10px;
+  }
+
+  .dropdown-menu {
+    width: 50px;
+    padding: 10px;
   }
 </style>
 </div>

@@ -3,6 +3,7 @@
 {% block content %}
 {{block.super}}
 
+
 <div class=" col-md-12">
     <div class="container">
         <div class="col-md-1"></div>
@@ -19,7 +20,7 @@
         {% for post in posts %}
         <div class="row">
             <div class="col-md-6 card">
-                
+
                 <div class="card-header" style="height: 70px; padding:5px; border:1px solid rgb(243, 241, 241); background-color: rgb(247, 247, 247);">
                     <div class="col-md-2">
                         <img class="img-responsive" src="{{ user.profile.prof_pic.url }}" style="width:50px; border-radius:50%">
@@ -37,9 +38,10 @@
                     <!-- modal -->
                 </div>
 
-                <div class="card-footer" style="padding-top:15px; height:100px;border:1px solid rgb(243, 241, 241); background-color: rgb(247, 247, 247);">
+                <div class="card-footer" style="padding-top:15px; min-height:100px; border:1px solid rgb(243, 241, 241); background-color: rgb(247, 247, 247);">
                     <div class="col-md-12">
-                        <a href=""><i class="far fa-heart" style="font-size:28px;"></i></a>
+                        <span class="instagram-like-icon"></span><span class="instagram-comment-icon"></span><span
+                            class="instagram-bookmark-icon"></span>
                     </div>
                     <div class="col-md-12">
                         <p><strong>{{ post.user }}</strong> {{ post.caption }} </p>
@@ -79,6 +81,54 @@
         </div>
     </div>
 </div>
+<style>
+    span.more-options {
+        background: url(https://res.cloudinary.com/jorpdesigns/image/upload/v1533421516/sprite.png);
+        background-repeat: no-repeat;
+        background-position: -78px -210px;
+        float: right;
+        height: 24px;
+        position: relative;
+        top: 11px;
+        vertical-align: middle;
+        width: 24px;
+    }
+
+    .instagram-post-bottom {
+        padding: 15px 45px;
+    }
+
+    .instagram-like-icon {
+        background: url(https://res.cloudinary.com/jorpdesigns/image/upload/v1533421516/sprite.png);
+        background-repeat: no-repeat;
+        background-position: -72px -138px;
+        float: left;
+        height: 24px;
+        margin-right: 20px;
+        vertical-align: middle;
+        width: 24px;
+    }
+
+    .instagram-comment-icon {
+        background: url(https://res.cloudinary.com/jorpdesigns/image/upload/v1533421516/sprite.png);
+        background-repeat: no-repeat;
+        background-position: -184px -52px;
+        float: left;
+        height: 24px;
+        vertical-align: middle;
+        width: 24px;
+    }
+
+    .instagram-bookmark-icon {
+        background: url(https://res.cloudinary.com/jorpdesigns/image/upload/v1533421516/sprite.png);
+        background-repeat: no-repeat;
+        background-position: -182px -184px;
+        float: right;
+        height: 24px;
+        vertical-align: middle;
+        width: 24px;
+    }
+</style>
 {% endfor %}
 
 {% endblock %}
