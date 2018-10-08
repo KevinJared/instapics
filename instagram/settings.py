@@ -72,6 +72,7 @@ INSTALLED_APPS = [
     'friendship',
     'content.apps.ContentConfig',
     'bootstrap3',
+    'bootstrap4',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

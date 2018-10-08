@@ -5,13 +5,7 @@
 
 
 <div class=" col-md-12">
-    <div class="container">
-        <div class="col-md-1"></div>
-        <div class="col-md-6" style=" margin-bottom: 10px;text-align:center; padding-right: 50px; border-radius: 5px; padding: 10px; border: 1px solid rgb(214, 214, 214);">
-            <a href="{%url 'new-post'%}">Upload image</a>
-        </div>
-        <div class="col-md-5"></div>
-    </div>
+
 </div>
 
 <div id="#section01" class="container" style="margin-top:30px; margin-left: 18%;">
@@ -19,31 +13,30 @@
     <div class="" style="margin-top:20px;">
 
         <div class="row">
-            <div class="col-md-6 card" style=" margin-right:80px; padding: 0px;">
+            <div class="col-md-6" style="padding: 0px; margin-bottom: 20px;">
+                <div class="upload">
+                    <a class="button" href="{%url 'new-post'%}">Upload image</a>
+                </div>
                 {% for post in posts %}
                 <div style="margin-bottom: 20px; border:1px solid rgb(243, 241, 241);">
-                    <div class="card-header" style="height: 70px; padding:5px; background-color: rgb(247, 247, 247);">
-                        <div class="col-md-2">
+                    <div class="" style="background-color: rgb(247, 247, 247); display: block;">
+                        <div class="" style="padding-top: 10px; padding-left: 10px;display:inline-block;">
                             <a href="{%url 'profile' user_id%}"><img class="img-responsive" src="{{ user.profile.prof_pic.url }}"
                                     style="width:50px; border-radius:50%"></a>
-                        </div>
-                        <div class="col-md-10">
+                            <h5>{{post.user}}</h5>
                             <strong>
-                                <a href="">
-                                    <h4>{{post.user}}</h4>
-                                </a>
-                                <h5>{{post.post_date|timesince}}</h5>
+                                <h6>{{post.post_date|timesince}}</h6>
                             </strong>
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="">
                         <!-- modal button-->
-                        <img type="button" class="img-responsive" data-toggle="modal" data-target="#myModal{{post.id}}"
-                            class="img-responsive" src="{{post.image.url }}" alt="" width="100%;">
+                        <img type="" class="img-responsive" data-toggle="modal" data-target="#myModal{{post.id}}" class="img-responsive"
+                            src="{{post.image.url }}" alt="" width="100%;">
                         <!-- modal -->
                     </div>
 
-                    <div class="card-footer" style="padding-top:15px; margin-bottom:60px; ">
+                    <div class="row" style="padding-top: 10px; padding-left: 10px;">
                         <div class="col-md-12" style="margin-bottom: 10px; ">
                             <span class="instagram-like-icon"></span><span class="instagram-comment-icon"></span><span
                                 class="instagram-bookmark-icon"></span>
@@ -52,33 +45,33 @@
                         </div>
                         <div class="col-md-12" style=" border-bottom: inherit;">
                             <p><strong>{{ post.user }}</strong> {{ post.caption }} </p>
-
                         </div>
                     </div>
                 </div>
                 {% endfor %}
-                <br>
             </div>
-            <div>
-                <div class="" style="display: inline-block; text-align: center; margin-bottom:20px;">
+
+            <div class="col-md-4">
+                <div class="col-md-4" style="display: inline; text-align: center;">
                     <img class="img-fluid rounded-circle" src="{{ user.profile.prof_pic.url }}" style="border-radius:50%; width:50px;">
                     <strong>{{ user.username }}</strong>
                 </div>
-              
+
                 <div>
-                    <div id="ex1" class="col-md-4" style="border-top: 1px solid grey; margin-top:5px; padding-top:20px;">
-                        <div class="row" style="display: inline-block; margin-bottom: 3px;">
+                    <div id="ex1" class="" style="border-top: 1px solid grey; margin-top:5px; padding-top:20px;">
+                        <div class="" style="display: inline-block; margin-bottom: 3px; font-size:13px;">
                             {% for post in posts %}
                             <img class="img-fluid rounded-circle" src="{{ post.image.url  }}" style="border-radius:50%; width:50px;">
-                            <strong>{{post.user}}</strong> <br>
-                            {% endfor %}    
+                            <strong>{{post.user}}</strong>
+                            <h5></h5>
+                            {% endfor %}
                         </div>
-                
+
                     </div>
-                    
-                    <div class="col-md-4" style="text-align:center; margin-top:4px;">
-                        <h6>About Us .SupportPress. API. Jobs. Privacy Terms. Directory. Profiles. Hashtags. Language.
-                            <br> © 2018 INSTAGRAM</h6>
+
+                    <div class="" style="text-align:center; margin-top:4px;">
+                        <p>About Us .SupportPress. API. Jobs. Privacy Terms. Directory. Profiles. Hashtags. Language.
+                            <br> © 2018 INSTAGRAM</p>
                     </div>
                 </div>
 
@@ -89,28 +82,6 @@
     </div>
 </div>
 {% for post in posts %}
-<!-- modal content -->
-<!-- modal content -->
-<div class="modal fade" id="myModal{{post.id}}" role="dialog">
-    <div class="modal-dialog modal-lg">
-
-        <div class="modal-content" style="background-color:rgba(255, 255, 255, 0.781);">
-            <div class="modal-header">
-                <div class="row">
-                    <div class="">
-                        <img src="{{post.image.url }}" alt="" width="110%" class="img-responsive">
-                    </div>
-                    <div class="">
-                        <button type="" class="close" data-dismiss="modal">&times;</button>
-                        <p><strong>Name:</strong> {{post.user}}</p>
-                        <h4 class="modal-title">{{post.image_caption}}</h4>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</div>
 <style>
     span.more-options {
         background: url(https://res.cloudinary.com/jorpdesigns/image/upload/v1533421516/sprite.png);
@@ -159,7 +130,21 @@
         width: 24px;
     }
 
-    h5 {
+    .upload .button {
+        background-color: rgb(248, 247, 247);
+        border: 1px solid rgb(216, 216, 216);
+        border-radius: 5px;
+        padding: 10px 30px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        width: 100%;
+    }
+
+    h6 {
         font-family: 'Maven Pro', sans-serif;
         color: crimson;
     }
@@ -168,6 +153,18 @@
         width: 350px;
         height: 350px;
         overflow: auto;
+    }
+
+    p {
+        font-size: 13px;
+    }
+
+    h5 {
+        font-size: 15px;
+    }
+
+    h6 {
+        font-size: 14px;
     }
 </style>
 {% endfor %}
