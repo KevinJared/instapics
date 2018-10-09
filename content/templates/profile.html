@@ -8,12 +8,12 @@
       <img class="img-fluid rounded-circle" src="{{ user.profile.prof_pic.url }}" style="border-radius:50%; width:150px;">
     </div>
     <div class="col-md-7">
-      <div style="container">
+      <div class="container">
         <div class="row">
-          <div class="col-md-3">
+          <div class="col-md-5">
             <h2><strong>{{ user.username }}</strong></h2> 
           </div>
-          <div class="col-md-9">
+          <div class="col-md-7">
             {% if user in people_following %}
             <button class="btn btn-light btn-white btn-sm widen"><strong>Following</strong></button></a>
             {% elif user == current_user %}
