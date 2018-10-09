@@ -22,7 +22,7 @@
                     <div class="" style="background-color: rgb(247, 247, 247); display: block;">
                         <div class="" style="padding-top: 10px; padding-left: 10px;display:inline-block;">
                             <a href="{%url 'profile' user_id%}"><img class="img-responsive" src="{{ user.profile.prof_pic.url }}"
-                                    style="width:50px; border-radius:50%"></a>
+                                    style="width:50px; height:50px; border-radius:50%"></a>
                             <strong>{{post.user}}</strong>
                             <strong>
                                 <h6>{{post.post_date|timesince}}</h6>
@@ -36,42 +36,42 @@
                         <!-- modal -->
                     </div>
 
-                    <div class="row" style="padding-top: 10px; padding-left: 10px;">
+                    <div class="row" style="padding-top: 10px; padding-right: 10px; padding-left: 10px; padding-bottom: 20px;">
                         <div class="col-md-12" style="margin-bottom: 10px; ">
                             <span class="instagram-like-icon"></span><span class="instagram-comment-icon"></span><span
                                 class="instagram-bookmark-icon"></span>
 
                             <span class="instagram-pers-icon"></span>
                         </div>
-                        <div class="col-md-12" style=" border-bottom: inherit;">
+                        <div class="col-md-12" style="">
                             <p><strong>{{ post.user }}</strong> {{ post.caption }} </p>
                             <a class="view-more"></a>
-                            <div>
-                                {% for comment in post.comment_set.all %}
-                                <li class="comment-list__comment">
-                                    <a href="{% url 'profile' }" class="user">
-                                        {{ comment.user.username }}
-                                    </a>
-                                    <span class="comment">{{ comment.comment }}</span>
-                                </li>
-                                {% endfor %}
-                            </div>
-                            {% if request.user.is_authenticated %}
-                            <section class="input-row">
-                                <i class="fa # submit-like" aria-hidden="true"></i>
-                                <div class="comment-input-wrapper">
-                                    <form action="{% url 'comment' post_id=post.id %}" method="post">
-                                        {% csrf_token %}
-                                        <input class="add-comment" name="comment" id="comment{{post.id}}" type="text"
-                                            placeholder="Add a comment...">
+                            {% for comment in post.comment_set.all %}
+                            <li class="comment-list__comment">
+                                <a href="{% url 'profile' }" class="user">
+                                    {{ comment.user.username }}
+                                </a>
+                                <span class="comment">{{comment.comment }}</span>
+                            </li>
+                            {% endfor %}
+                            <div style="border-top: 1px solid rgb(243, 242, 242);">
+                                {% if request.user.is_authenticated %}
+                                <section class="input-row">
+                                    <i class="fa # submit-like" aria-hidden="true"></i>
+                                    <div class="comment-input-wrapper">
+                                        <form action="{% url 'comment' post_id=post.id %}" method="post">
+                                            {% csrf_token %}
+                                            <input class="add-comment" name="comment" id="comment{{post.id}}" type="text"
+                                                placeholder="Add a comment...">
 
-                                    </form>
-                                </div>
-                                <div class="hidden-data {{ post.pk }}" style="display: none;">
-                                    <span class="post-pk">{{ post.pk }}</span>
-                                </div>
-                            </section>
-                            {% endif %}
+                                        </form>
+                                    </div>
+                                    <div class="hidden-data {{ post.pk }}" style="display: none;">
+                                        <span class="post-pk">{{ post.pk }}</span>
+                                    </div>
+                                </section>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>
