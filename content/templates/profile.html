@@ -1,25 +1,35 @@
 {% extends 'base.html' %}
 {% block content %}
 
-
-<div class="container" style="margin-top: 30px;">
-  <div class="row" style="border-bottom: 1px solid rgb(214, 214, 214); padding-bottom: 10px;">
-    <div class="col-md-2">
+<link href="https://fonts.googleapis.com/css?family=Krub" rel="stylesheet">
+<div class="container" style="margin-top: 30px;font-family: 'Krub', sans-serif; letter-spacing: px;">
+  <div class="row" style="border-bottom: 1px solid rgb(214, 214, 214); padding-bottom: 1px;">
+    <div class="col-md-3" style="float:right;">
       <img class="img-fluid rounded-circle" src="{{ user.profile.prof_pic.url }}" style="border-radius:50%; width:150px;">
     </div>
-    <div class="col-md-6">
-      <strong>{{ user.username }}</strong>
-      <p>{{profile.bio}}</p>
+    <div class="col-md-7">
+      <div style="container">
+        <div class="row">
+          <div class="col-md-3">
+            <h2><strong>{{ user.username }}</strong></h2> 
+          </div>
+          <div class="col-md-9">
+            {% if user in people_following %}
+            <button class="btn btn-light btn-white btn-sm widen"><strong>Following</strong></button></a>
+            {% elif user == current_user %}
+            <a href="{% url 'updateprofile' %}"><button class="btn">EDIT PROFILE</button></a>
+            {% else %}
+            <a href="{% url 'follow' user_id=user.id %}"><button class="btn btn-primary btn-sm widen"><strong>Follow</strong></button></a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:30px;">
+        <strong>{{ user.username }}</strong>
+        &nbsp;<p>{{user.profile.bio}}</p>
+      </div>
     </div>
-    <div class="col-md-4">
-
-      {% if user in people_following %}
-      <button class="btn btn-light btn-white btn-sm widen"><strong>Following</strong></button></a>
-      {% elif user == current_user %}
-      <a href="{% url 'updateprofile' %}"><button class="btn">EDIT PROFILE</button></a>
-      {% else %}
-      <a href="{% url 'follow' user_id=user.id %}"><button class="btn btn-primary btn-sm widen"><strong>Follow</strong></button></a>
-      {% endif %}
+    <div class="col-md-2" style="display:inline-block;">
 
       {% if user.is_authenticated %}
 
