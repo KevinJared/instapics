@@ -50,3 +50,4 @@ class Comment(models.Model):
     text = models.TextField()
     photo = models.ForeignKey(Post, related_name='comment')
     user = models.ForeignKey(Profile, related_name='comment')
+                              
