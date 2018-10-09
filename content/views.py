@@ -83,7 +83,7 @@ def comment_on(request,post_id):
       comment.user = request.user
       comment.post = post
       comment.save()
-  return redirect('index.html')
+  return redirect('index')
 
 @login_required(login_url='/accounts/login/')
 def find(request, name):

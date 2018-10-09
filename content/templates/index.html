@@ -46,14 +46,16 @@
                         <div class="col-md-12" style=" border-bottom: inherit;">
                             <p><strong>{{ post.user }}</strong> {{ post.caption }} </p>
                             <a class="view-more"></a>
-                            {% for comment in post.comment_set.all %}
-                            <li class="comment-list__comment">
-                                <a href="{% url 'profile' }" class="user">
-                                    {{ comment.user.username }}
-                                </a>
-                                <span class="comment">{{ comment.comment }}</span>
-                            </li>
-                            {% endfor %}
+                            <div>
+                                {% for comment in post.comment_set.all %}
+                                <li class="comment-list__comment">
+                                    <a href="{% url 'profile' }" class="user">
+                                        {{ comment.user.username }}
+                                    </a>
+                                    <span class="comment">{{ comment.comment }}</span>
+                                </li>
+                                {% endfor %}
+                            </div>
                             {% if request.user.is_authenticated %}
                             <section class="input-row">
                                 <i class="fa # submit-like" aria-hidden="true"></i>
